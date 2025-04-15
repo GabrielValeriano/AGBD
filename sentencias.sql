@@ -107,4 +107,33 @@ INNER JOIN country cy
 on c.country_id = cy.country_id
 GROUP BY s.store_id
 
+SELECT AVG(f.rental_duration*f.rental_rate) as PromedioDeRentas, c.name as categoria
+FROM film f
+INNER JOIN inventory i
+on f.film_id = i.film_id
+INNER JOIN rental r 
+on i.inventory_id = r.inventory_id
+INNER JOIN film_category fc
+on f.film_id = fc.film_id
+INNER JOIN category c 
+on fc.category_id = c.category_id
+GROUP BY c.category_id
 
+
+INSERT INTO actor(actor_id,first_name,last_name,l)
+VALUES(201, "Tomas", "Mayorga","2020-12-23 07:12:29")
+
+UPDATE actor
+SET first_name = "Fede", last_name = "Village"
+WHERE last_name = "Mayorga" AND first_name = "Tomas"
+
+DELETE FROM actor
+WHERE actor_id = 201
+
+SELECT f.title as Pelicula, SUM(rental_rate*rental_duration) as CostoTotal, r.rental_date as DiaDeAlquiler, r.return_date as DiaDeDevolucionesPorAccidentes
+FROM film f
+INNER JOIN inventory i
+on f.film_id = i.film_id
+INNER JOIN rental r
+on i.inventory_id = r.inventory_id
+WHERE f.title = "ALABAMA DEVIL"
