@@ -137,3 +137,29 @@ on f.film_id = i.film_id
 INNER JOIN rental r
 on i.inventory_id = r.inventory_id
 WHERE f.title = "ALABAMA DEVIL"
+
+SELECT f.title as Nombre, c.name as Categoria, f.length as Duracion
+FROM film f
+INNER JOIN film_category fc
+on f.film_id = fc.film_id
+INNER JOIN category c
+on fc.category_id = c.category_id
+ORDER BY length DESC
+
+SELECT f.title as Nombre, count(a.actor_id) as cantidadActores
+FROM film f
+INNER JOIN film_actor fa
+on f.film_id = fa.film_id
+INNER JOIN actor a
+on fa.actor_id = a.actor_id
+WHERE f.title LIKE 'w%'
+GROUP BY f.title
+HAVING cantidadActores >=5
+ORDER BY cantidadActores ASC
+
+SELECT c.first_name as Nombre, c.last_name as Apellido, SUM(p.amount) as TotalPagado
+FROM payment p 
+INNER JOIN customer c
+on p.customer_id = c.customer_id
+GROUP BY c.customer_id
+HAVING TotalPagado
