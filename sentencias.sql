@@ -163,3 +163,13 @@ INNER JOIN customer c
 on p.customer_id = c.customer_id
 GROUP BY c.customer_id
 HAVING TotalPagado
+
+SELECT f.title as Titulo, f.length as Duracion, a.first_name as NombreActor
+FROM film f
+INNER JOIN film_actor fa
+on f.film_id = fa.film_id
+INNER JOIN actor a
+on fa.actor_id = a.actor_id
+GROUP BY NombreActor
+HAVING Duracion <= 60
+ORDER BY Duracion ASC
