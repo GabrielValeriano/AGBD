@@ -33,14 +33,53 @@ HAVING Canciones >= 5
 ORDER BY Canciones ASC
 
 /*Nombre y precio total de los 10 discos más baratos*/
-/*Incompleto*/
 
-SELECT a.title as Disco, i.UnitPrice as Precio
+SELECT a.title as Disco, sum(t.UnitPrice) as Precio
 FROM albums a
 INNER JOIN tracks t
 on a.AlbumId = t.AlbumId
 INNER JOIN invoice_items i
 on t.TrackId = i.TrackId
-GROUP BY Precio
-HAVING count(t.TrackId)
-ORDER BY Disco
+GROUP BY Disco
+HAVING Precio
+ORDER BY Precio ASC LIMIT 10
+
+/*Nombre del tema, nombre del género y nombre del disco 
+  de los temas que valen $0.99*/
+
+SELECT a.title as Disco, sum(t.UnitPrice) as Precio
+FROM albums a
+INNER JOIN tracks t
+on a.AlbumId = t.AlbumId
+INNER JOIN invoice_items i
+on t.TrackId = i.TrackId
+GROUP BY Disco
+HAVING Precio <= 0.99
+ORDER BY Precio ASC 
+
+/*Nombre del tema, duración, nombre del disco y nombre 
+  del artista de los 20 temas más cortos*/
+
+SELECT t.name as Cancion, t.Milliseconds as Duracion, a.Title as Disco, ar.name as Artista
+FROM tracks t
+INNER JOIN albums a
+on t.AlbumId = a.AlbumId
+INNER JOIN artists ar
+on a.ArtistId = ar.ArtistId
+ORDER BY Duracion ASC LIMIT 20
+
+/*Apellido, puesto, apellido del jefe y cantidad de clientes que atiende de todos los empleados,
+  ordenado desde los que atienden más clientes a los que atienden menos*/
+/*Incompleto(No era posible hacerlo)*/
+
+SELECT e.LastName as Apellido, r.LastName AS Apellido_Jefe, count(c.CustomerId)
+FROM employees e
+INNER JOIN employees r
+on r.ReportsTo = e.EmployeeId
+INNER JOIN customers c
+on r.EmployeeId = c.SupportRepId
+GROUP by r.EmployeeId
+
+SELECT employees.LastName FROM employees 
+INNER JOIN employees r ON employees.EmployeeId = r.ReportsTo
+INNER JOIN customers cu ON employees.EmployeeId = cu.SupportRepId
