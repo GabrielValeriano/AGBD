@@ -83,3 +83,44 @@ GROUP by r.EmployeeId
 SELECT employees.LastName FROM employees 
 INNER JOIN employees r ON employees.EmployeeId = r.ReportsTo
 INNER JOIN customers cu ON employees.EmployeeId = cu.SupportRepId
+
+/*Insertar cuatro (4) canciones que les gusten.*/
+
+INSERT INTO tracks(TrackId,name, MediaTypeId, Milliseconds,UnitPrice)
+VALUES ,(3504,"Young Flex",1,161000,0.99),
+(3505,"Blunt",2,153000,0.99),
+(3506,"Ayer Me Llamo Mi Ex",3,203000,0.99),
+(3507,"Gelato44(feat.Duki & Saga White Black)",4,136000,0.99)
+
+/*Mostrar las cuatro canciones ingresadas.*/
+
+SELECT t.name as Cancion
+FROM tracks t
+ORDER BY TrackId DESC LIMIT 4
+
+/*Modifiquen dos (2) canciones por otras que se les ocurran.*/
+
+/*Modificamos la cancion "Ayer Me Llamo Mi Ex"*/
+
+UPDATE tracks
+SET TrackId = 3506, name = "Algo Aparte", MediaTypeId = 2, Milliseconds = 202000, UnitPrice = 0.99
+WHERE TrackId = 3506
+
+/*Modificamos la cancion "Blunt"*/
+
+UPDATE tracks
+SET TrackId = 3505, name = "BESAME(feat.Tiago PZK,Khea & Neo Pistea)-Remix", MediaTypeId = 2, Milliseconds = 284000, UnitPrice = 0.99
+WHERE TrackId = 3505
+
+/*Mostrar las dos (2) canciones modificadas.*/
+
+SELECT t.name as CancionesModificadas
+FROM tracks t
+WHERE t.TrackId = 3506 OR t.TrackId = 3505
+ORDER BY t.TrackId DESC
+
+/*Borrar dos (2) datos ingresados, realizando un solo delete.*/
+
+DELETE FROM tracks
+WHERE TrackId >= 3504 AND TrackId <= 3505
+
